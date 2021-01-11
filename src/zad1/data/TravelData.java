@@ -13,7 +13,7 @@ public class TravelData {
     private final List<Travel> travelData = new ArrayList<>();
 
     public TravelData(File dataFile) {
-        fillData(dataFile);
+        fillData(new File(dataFile, "Offers.tsv"));
     }
 
     public TravelData(String path) {
@@ -30,7 +30,7 @@ public class TravelData {
                 .map(TravelData::parseLine)
                 .forEach(travelData::add);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
@@ -62,7 +62,11 @@ public class TravelData {
             travel.getLocale(),
             locale,
             oldCountry
-        ).orElse("Translation for " + oldCountry + " not found");
+        ).orElse(
+            oldCountry.startsWith("Translation for")
+                ? oldCountry
+                : "Translation for " + oldCountry + " not found"
+        );
 
         Function<String, String> transformDate =
             date -> formatDate(
@@ -106,7 +110,7 @@ public class TravelData {
     }
 
     public static void main(String[] args) {
-        TravelData data = new TravelData("data/Offers.tsv");
+        TravelData data = new TravelData("data");
 
         data.getTravelData()
             .forEach(System.out::println);

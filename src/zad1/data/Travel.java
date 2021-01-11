@@ -1,6 +1,9 @@
 package zad1.data;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Travel {
     private final String locale;
     private String country;
@@ -53,17 +56,24 @@ public class Travel {
         return currency;
     }
 
+    public List<String> asList() {
+        return new ArrayList<>() {{
+            add(locale);
+            add(country);
+            add(startDate);
+            add(endDate);
+            add(place);
+            add(price);
+            add(currency);
+        }};
+    }
+
     @Override
     public String toString() {
-        return "Travel{" +
-            "locale = '" + locale + '\'' +
-            ", country = '" + country + '\'' +
-            ", start date = '" + startDate + '\'' +
-            ", end date = '" + endDate + '\'' +
-            ", place = '" + place + '\'' +
-            ", price = '" + price + '\'' +
-            ", currency = '" + currency + '\'' +
-            '}';
+        return String.join(" ",
+            country, startDate, endDate,
+            place, price, currency
+        );
     }
 
     public String getEndDate() {

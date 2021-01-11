@@ -24,7 +24,7 @@ public class Main {
       for (String od : odlist) System.out.println(od);
     }
     // --- część bazodanowa
-    String url = "";/*<-- tu należy wpisać URL bazy danych */
+    String url = "jdbc:sqlite:data/Travels.db";
         Database db = new Database(url, travelData);
     db.create();
     db.showGui();
